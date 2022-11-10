@@ -1,12 +1,12 @@
 :root {
     --font--family: "Inter", sans-serif;
 
-    --color--primary: #222;
-    --color--secondary: rgb(0, 170, 170);
-    --color--tertiary: rgb(170, 0, 170);
-    --color--quaternary: rgb(170, 170, 0);
-    --color--black: rgba(0, 0, 0, 0.9);
-    --color--white: rgba(255, 255, 255, 0.9);
+    --color--primary: rgb(128, 0, 255);
+    --color--secondary: rgb(255, 0, 128);
+    --color--tertiary: rgb(0, 255, 128);
+
+    --color--white: rgb(245, 245, 245);
+    --color--black: rgb(30, 30, 30);
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
@@ -30,14 +30,14 @@ body:before {
     display: block;
     width: 50rem;
     height: 50rem;
-    background-image: linear-gradient(90deg, var(--color--tertiary), black);
+    background-image: linear-gradient(90deg, var(--color--secondary), black);
     position: fixed;
     top: -25rem;
     right: -25rem;
     border-radius: 50%;
     z-index: -1;
-    animation: floatY 5s ease-in-out infinite;
-    box-shadow: 0px 0px 50px 10px rgba(255, 255, 255, 0.2);
+    animation: floatY 5s ease-in-out infinite 1s;
+    box-shadow: 0px 0px 50px 10px rgba(255, 255, 255, 0.25);
 }
 
 body:after {
@@ -45,14 +45,14 @@ body:after {
     display: block;
     width: 50rem;
     height: 50rem;
-    background-image: linear-gradient(-90deg, var(--color--secondary), black);
+    background-image: linear-gradient(-90deg, var(--color--tertiary), black);
     position: fixed;
     bottom: -25rem;
     left: -25rem;
     border-radius: 50%;
     z-index: -1;
     animation: floatX 5s ease-in-out infinite;
-    box-shadow: 0px 0px 50px 10px rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 0px 50px 10px rgba(255, 255, 255, 0.25);
 }
 
 h1,
@@ -72,11 +72,30 @@ ul {
 }
 
 a {
+    color: var(--color--white);
     text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: var(--color--white);
 }
 
 hr {
     border: 0;
+}
+
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    word-wrap: normal;
 }
 
 .site {
@@ -101,7 +120,7 @@ hr {
     height: 6rem;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0px 0px 50px 1px rgba(255, 255, 255, 0.5);
+    border: 0.325rem solid var(--color--primary);
     animation: fadeIn 0.5s ease-in forwards;
 }
 
@@ -109,6 +128,10 @@ hr {
     display: block;
     width: 6rem;
     height: 6rem;
+}
+
+.avatar img:hover {
+    animation: spinning 2s linear infinite;
 }
 
 .site-title {
@@ -124,12 +147,20 @@ hr {
     font-size: 0.9rem;
 }
 
+.site-content {
+    display: grid;
+    gap: 3rem;
+}
+
 .list-item + .list-item:not(.item-separator) {
     margin: 1rem 0 0;
 }
 
 .list-item a {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     padding: 1rem 2rem;
     background-color: rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(0.5rem);
@@ -139,12 +170,33 @@ hr {
     text-align: center;
 }
 
-.list-item a:hover {
+.list-item a:hover,
+.list-item a:focus {
     animation: hover 0.25s ease-in-out forwards;
 }
 
 .item-separator {
     margin: 3rem 0;
+}
+
+.horizontal-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.horizontal-item a {
+    display: block;
+}
+
+.horizontal-item a:hover,
+.horizontal-item a:focus {
+    animation: horizontalHover 0.25s ease-in-out forwards;
+}
+
+.horizontal-item svg {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .site-footer {
@@ -160,15 +212,28 @@ hr {
     }
 
     50% {
-        transform: scale(1.05, 1.05);
+        backface-visibility: hidden;
+        transform: scale(1.05, 1.05) translateZ(0);
         background-color: var(--color--white);
         color: var(--color--black);
     }
 
     100% {
-        transform: scale(1.02, 1.02);
+        backface-visibility: hidden;
+        transform: scale(1.02, 1.02) translateZ(0);
         background-color: var(--color--white);
         color: var(--color--black);
+    }
+}
+
+@keyframes horizontalHover {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    100% {
+        backface-visibility: hidden;
+        transform: scale(1.1, 1.1) translateZ(0);
     }
 }
 
@@ -209,5 +274,15 @@ hr {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes spinning {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }
